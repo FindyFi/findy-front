@@ -3,32 +3,33 @@ Front end for Findynet customers
 
 ## Prerequisite 
 
-Python 3.6 [pyenv recommended](https://github.com/pyenv/pyenv#installation)
-[Virtualenv] (https://virtualenv.pypa.io/en/latest/installation.html) (If you run locally)
-Docker (If you run via docker)
+- Python 3.6 [pyenv recommended](https://github.com/pyenv/pyenv#installation)
+- [Virtualenv] (https://virtualenv.pypa.io/en/latest/installation.html) (If you run locally)
+- Docker (If you run via docker)
 
 
 ## How to run locally
 
-Clone repo
+Clone repository
 ```sh
 git clone https://github.com/FindyFi/findy-front.git
 cd findy-front
 ```
 
-Update genesis based on which ledger you want to connect
+Update `pool_transactions_genesis` based on which ledger you want to connect
 
-Create .env file at the root of project and add TRUSTEE_SEED value
+Create `.env` file at the root of project and add `TRUSTEE_SEED` value
 ```sh
 echo TRUSTEE_SEED=000000000000000000000000Trustee1 > .env
 ```
 
-Create virtual enviornment 
+Create and activate python virtual enviornment 
 ```sh
 virtualenv --python=python3.6 venv
 source venv/bin/activate
 ```
 
+Install dependencies and run the front end
 ```sh
 pip install -r server/requirements.txt
 source .env 
@@ -37,15 +38,15 @@ source .env
 
 ## How to run in a docker
 
-Clone repo
+Clone repository
 ```sh
 git clone https://github.com/FindyFi/findy-front.git
 cd findy-front
 ```
 
-Update genesis based on which ledger you want to connect to
+Update `pool_transactions_genesis` based on which ledger you want to connect
 
-create .env file at the root of project and add TRUSTEE_SEED value
+Create `.env` file at the root of project and add `TRUSTEE_SEED` value
 
 ```sh
 echo TRUSTEE_SEED=000000000000000000000000Trustee1 > .env
