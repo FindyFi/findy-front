@@ -3,9 +3,10 @@ Front end for Findynet customers
 
 ## Prerequisite 
 
-- Python 3.6 [pyenv recommended](https://github.com/pyenv/pyenv#installation)
-- [Virtualenv] (https://virtualenv.pypa.io/en/latest/installation.html) (If you run locally)
-- Docker (If you run via docker)
+- Unix shell
+- Python 3.6 ([pyenv recommended](https://github.com/pyenv/pyenv#installation))
+- [Virtualenv](https://virtualenv.pypa.io/en/latest/installation.html) (If you run locally)
+- [Docker](https://www.docker.com/) (If you run via docker)
 
 
 ## How to run locally
