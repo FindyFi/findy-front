@@ -56,5 +56,5 @@ echo TRUSTEE_SEED=000000000000000000000000Trustee1 > .env
 Build and run docker container
 ```sh
 docker build -f ./Dockerfile -t findy_front .
-docker run -itd -p 9000:9000 findy_front
+docker run -itd -p 9000:80 findy_front
 ```
