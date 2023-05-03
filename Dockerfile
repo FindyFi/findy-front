@@ -3,7 +3,7 @@ FROM bcgovimages/von-image:node-1.12-6
 ENV LOG_LEVEL ${LOG_LEVEL:-info}
 ENV RUST_LOG ${RUST_LOG:-warning}
 
-EXPOSE 80
+EXPOSE 9000
 
 ADD config ./config
 ADD server/requirements.txt server/
@@ -20,12 +20,4 @@ ADD --chown=indy:indy . $HOME
 # Create empty .env file if it doesn't exist to avoid deployment issues
 RUN [ -f $HOME/.env ] || touch $HOME/.env
 
-ENTRYPOINT ["/bin/bash", "-c", "source $HOME/.env && GENESIS_FILE=$PWD/pool_transactions_genesis \
-    LEDGER_SEED=$TRUSTEE_SEED \
-    PORT=80 \
-    LOG_LEVEL=info \
-    RUST_LOG=warning \
-    REGISTER_NEW_DIDS=True \
-    AML_CONFIG_FILE=$PWD/config/sample_aml.json \
-    TAA_CONFIG=$PWD/config/sample_taa.json \
-    python -m server.server"]
+ENTRYPOINT ["/bin/bash", "-c", "source $HOME/.env && ./start.sh $TRUSTEE_SEED"]
