@@ -3,7 +3,7 @@ FROM bcgovimages/von-image:node-1.12-6
 ENV LOG_LEVEL ${LOG_LEVEL:-info}
 ENV RUST_LOG ${RUST_LOG:-warning}
 
-EXPOSE 80
+EXPOSE 8080
 
 ADD config ./config
 ADD server/requirements.txt server/
@@ -20,7 +20,7 @@ ADD --chown=indy:indy . $HOME
 
 ENTRYPOINT ["/bin/bash", "-c", "GENESIS_FILE=$PWD/pool_transactions_genesis \
     LEDGER_SEED=$TRUSTEE_SEED \
-    PORT=80 \
+    PORT=8080 \
     LOG_LEVEL=info \
     RUST_LOG=warning \
     REGISTER_NEW_DIDS=True \
