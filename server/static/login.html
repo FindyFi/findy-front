@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- For IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- For Resposive Device -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- For Window Tab Color -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#202020">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#202020">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#202020">
+    <title>Findy Login</title>
+    <!-- Main style sheet -->
+    <link rel="stylesheet" type="text/css" href="include/css/style.css" media="all">
+    <!-- responsive style sheet -->
+    <link rel="stylesheet" type="text/css" href="include/css/responsive.css" media="all">
+
+    <!-- Fix Internet Explorer ______________________________________-->
+    <!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="vendor/html5shiv.js"></script>
+			<script src="vendor/respond.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+    <div class="main-page-wrapper">
+        <!-- ===================================================
+				Loading Transition
+			==================================================== -->
+        <section>
+            <div id="preloader">
+                <div id="ctn-preloader" class="ctn-preloader">
+                    <div class="animation-preloader">
+                        <div class="icon"><img src="include/images/logo/icon-findy.png" style="height:16px" alt=""
+                                class="m-auto d-block">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- 
+			=============================================
+				Sign In
+			============================================== 
+			-->
+        <div class="user-data-page clearfix d-md-flex">
+            <div class="illustration-wrapper d-none d-md-flex align-items-center justify-content-between flex-column"
+                style="background: #F9F5F0;;">
+                <div class="row">
+                    <div class="col-xxl-8 col-xl-11 m-auto">
+                        <blockquote>"Identity is not something to be solved, but something to be created and
+                            continuously developed."</blockquote>
+                        <span class="bio">— Bernard Roth</span>
+                    </div>
+                </div>
+                <div class="illustration-holder">
+                    <img src="include/images/assets/login-img.png" alt="" class="illustration ms-auto">
+                </div>
+            </div> <!-- /.illustration-wrapper -->
+
+            <div class="form-wrapper">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="logo"><a href="index.html"><img src="include/images/logo/brand-logo-color.png" alt=""
+                                width="127"></a>
+                    </div>
+                    <!-- <a href="index.html" class="go-back-button">Go to home</a> -->
+                </div>
+                <form action="#" class="user-data-form mt-80 lg-mt-50">
+                    <h2 class="font-recoleta">Hi welcome <br> to <span>Findy Network</span></h2>
+                    <p class="header-info pt-20 pb-50 lg-pb-30">Still don't have an account? <a
+                            href="sign-up.html">Request sign
+                            up</a></p>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group-meta mb-30">
+                                <label>Email</label>
+                                <input type="email" placeholder="email@organization.fi">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group-meta mb-25">
+                                <label>Password</label>
+                                <input type="password" placeholder="Enter Password" class="pass_log_id">
+                                <span class="placeholder_icon"><span class="passVicon"><img
+                                            src="include/images/icon/icon_67.svg" alt=""></span></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="agreement-checkbox d-flex justify-content-between align-items-center">
+                                <div>
+                                    <input type="checkbox" id="remember">
+                                    <label for="remember">Keep me logged in</label>
+                                </div>
+                                <a href="#">Forget Password?</a>
+                            </div> <!-- /.agreement-checkbox -->
+                        </div>
+                        <div class="col-12">
+                            <button class="theme-btn-one w-100 mt-50 mb-50">Login</button>
+                        </div>
+                        <div class="col-12">
+                            <p class="text-center copyright-text">Copyright @<span id="copyright">
+                                    <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+                                </span> Findynet Cooperative.</p>
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- /.form-wrapper -->
+        </div> <!-- /.user-data-page -->
+
+
+
+
+        <!-- Optional JavaScript _____________________________  -->
+
+        <!-- jQuery first, then Bootstrap JS -->
+        <!-- jQuery -->
+        <script src="include/vendor/jquery.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="include/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AOS js -->
+        <script src="include/vendor/aos-next/dist/aos.js"></script>
+        <!-- Slick Slider -->
+        <script src="include/vendor/slick/slick.min.js"></script>
+        <!-- js Counter -->
+        <script src="include/vendor/jquery.counterup.min.js"></script>
+        <script src="include/vendor/jquery.waypoints.min.js"></script>
+        <!-- Fancybox -->
+        <script src="include/vendor/fancybox/dist/jquery.fancybox.min.js"></script>
+        <!-- MixIt Up -->
+        <script src="include/vendor/mixitup-3/mixitup.min.js"></script>
+        <!-- validator js -->
+        <script src="include/vendor/validator.js"></script>
+
+        <!-- Theme js -->
+        <script src="include/js/theme.js"></script>
+    </div> <!-- /.main-page-wrapper -->
+</body>
+
+</html>

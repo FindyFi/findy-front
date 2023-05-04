@@ -18,7 +18,6 @@ RUN pip3 install -U pip && \
 
 ADD --chown=indy:indy . $HOME
 
-
 ENTRYPOINT ["/bin/bash", "-c", "GENESIS_FILE=$PWD/pool_transactions_genesis \
     LEDGER_SEED=$TRUSTEE_SEED \
     PORT=80 \

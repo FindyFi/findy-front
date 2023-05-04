@@ -8,6 +8,9 @@ import shutil
 import yaml
 import aiohttp_jinja2
 import jinja2
+from .middleware import (
+    jwt_middleware
+)
 
 from aiohttp import web
 
@@ -28,7 +31,7 @@ os.chdir(os.path.dirname(__file__))
 
 LOGGER.info("REGISTER_NEW_DIDS is set to %s", REGISTER_NEW_DIDS)
 
-LEDGER_INSTANCE_NAME = os.getenv("LEDGER_INSTANCE_NAME", "Findy Ledger Browser")
+LEDGER_INSTANCE_NAME = os.getenv("LEDGER_INSTANCE_NAME", "Findy")
 LOGGER.info('LEDGER_INSTANCE_NAME is set to "%s"', LEDGER_INSTANCE_NAME)
 
 WEB_ANALYTICS_SCRIPT = os.getenv("WEB_ANALYTICS_SCRIPT", "")
@@ -41,6 +44,7 @@ INFO_SITE_URL = os.getenv("INFO_SITE_URL")
 INFO_SITE_TEXT = os.getenv("INFO_SITE_TEXT") or os.getenv("INFO_SITE_URL")
 
 APP = web.Application()
+APP.middlewares.append(jwt_middleware)
 aiohttp_jinja2.setup(APP, loader=jinja2.FileSystemLoader("./static"))
 
 ROUTES = web.RouteTableDef()
@@ -49,6 +53,36 @@ TRUST_ANCHOR = AnchorHandle()
 
 @ROUTES.get("/")
 @aiohttp_jinja2.template("index.html")
+async def index(request):
+      return {
+        "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
+        "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
+        "WEB_ANALYTICS_SCRIPT": WEB_ANALYTICS_SCRIPT,
+        "INFO_SITE_TEXT": INFO_SITE_TEXT,
+        "INFO_SITE_URL": INFO_SITE_URL,
+    }
+
+
+@ROUTES.get("/register")
+@aiohttp_jinja2.template("register.html")
+async def index(request):
+      return {
+        "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
+        "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
+        "WEB_ANALYTICS_SCRIPT": WEB_ANALYTICS_SCRIPT,
+        "INFO_SITE_TEXT": INFO_SITE_TEXT,
+        "INFO_SITE_URL": INFO_SITE_URL,
+    }
+
+
+@ROUTES.get("/login")
+@aiohttp_jinja2.template("login.html")
+async def index(request):
+    return {}
+
+
+@ROUTES.get("/main")
+@aiohttp_jinja2.template("main.html")
 async def index(request):
     return {
         "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
@@ -154,7 +188,8 @@ async def ledger_json(request):
     results = []
     for row in rows:
         try:
-            last_modified = max(last_modified, row[1]) if last_modified else row[1]
+            last_modified = max(
+                last_modified, row[1]) if last_modified else row[1]
         except TypeError:
             last_modified = row[1]
         results.append(json.loads(row[3]))
@@ -220,7 +255,8 @@ async def ledger_text(request):
 
         txnTime = txn.get("txnTime")
         if txnTime is not None:
-            ftime = datetime.fromtimestamp(txnTime).strftime("%Y-%m-%d %H:%M:%S")
+            ftime = datetime.fromtimestamp(
+                txnTime).strftime("%Y-%m-%d %H:%M:%S")
             text.append("TIME: " + ftime)
 
         reqId = metadata.get("reqId")
@@ -310,8 +346,8 @@ async def register(request):
         if not did or not verkey:
             return web.Response(
                 text=(
-                  "Either seed the seed parameter or the did and "
-                  "verkey parameters must be provided."),
+                    "Either seed the seed parameter or the did and "
+                    "verkey parameters must be provided."),
                 status=400,
             )
 
@@ -342,4 +378,3 @@ if __name__ == "__main__":
     LOGGER.info("Running webserver...")
     PORT = int(os.getenv("PORT", "8000"))
     web.run_app(APP, host="0.0.0.0", port=PORT)
-

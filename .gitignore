@@ -6,6 +6,7 @@
 # Backup files
 backup/
 .history
+.vscode
 
 # tmp script files
 *_DeploymentConfig.json

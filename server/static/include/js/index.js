@@ -61,7 +61,7 @@ var app = new Vue({
             info = node.Node_info;
 
           // Skip nodes with error condition
-          if(node.error) {
+          if (node.error) {
             console.error(`Received error status for validator node ${info.Name}:`, node.error);
             continue;
           }
@@ -85,7 +85,8 @@ var app = new Vue({
           if (upt_h || upt_parts.length) { upt_parts.push('' + upt_h + ' hours') };
           if (upt_m || upt_parts.length) { upt_parts.push('' + upt_m + ' minutes') };
           upt_parts.push('' + upt_s + ' seconds');
-          result.uptime = upt_parts.join(', ');
+          // result.uptime = upt_parts.join(', ');          
+          result.uptime = upt_d + ' days & ' + upt_h + ' hours';
 
           if (node.Pool_info.Unreachable_nodes_count) {
             result.unreachable = node.Pool_info.Unreachable_nodes.join(', ');
@@ -121,6 +122,9 @@ var app = new Vue({
           txns.push('' + shorten(tx_avgs['read-transactions']) + '/s read');
           txns.push('' + shorten(tx_avgs['write-transactions']) + '/s write');
           result.txns = txns.join(', ');
+          result.txns_total = tx_counts.config + tx_counts.ledger + tx_counts.pool;
+          result.txns_read = tx_avgs['read-transactions'].toFixed(5);
+          result.txns_write = tx_avgs['write-transactions'].toFixed(8);
 
           formatted.rows.push(result);
         }
