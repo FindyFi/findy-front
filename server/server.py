@@ -28,7 +28,7 @@ os.chdir(os.path.dirname(__file__))
 
 LOGGER.info("REGISTER_NEW_DIDS is set to %s", REGISTER_NEW_DIDS)
 
-LEDGER_INSTANCE_NAME = os.getenv("LEDGER_INSTANCE_NAME", "Ledger Browser")
+LEDGER_INSTANCE_NAME = os.getenv("LEDGER_INSTANCE_NAME", "Findy Ledger Browser")
 LOGGER.info('LEDGER_INSTANCE_NAME is set to "%s"', LEDGER_INSTANCE_NAME)
 
 WEB_ANALYTICS_SCRIPT = os.getenv("WEB_ANALYTICS_SCRIPT", "")
