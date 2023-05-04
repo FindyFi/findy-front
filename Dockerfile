@@ -1,4 +1,5 @@
 FROM bcgovimages/von-image:node-1.12-6
+USER root
 
 ENV LOG_LEVEL ${LOG_LEVEL:-info}
 ENV RUST_LOG ${RUST_LOG:-warning}
