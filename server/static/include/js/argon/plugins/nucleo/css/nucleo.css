@@ -8,6 +8,10 @@ License - nucleoapp.com/license/
 @import url('../../../../../fonts//gordita/stylesheet.css');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
 
+[v-cloak] {
+  display: none;
+}
+
 .board {
   font-family: 'gorditaregular';
   font-weight: normal;

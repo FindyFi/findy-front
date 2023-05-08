@@ -1,3 +1,40 @@
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = '/login';
+}
+
+async function genesis() {
+  fetch('/genesis', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  }).then(response => response.text())
+    .then(text => {
+      // Create a Blob with the JSON text
+      const blob = new Blob([text], { type: 'text/plain' });
+
+      // Create a temporary URL for the file
+      const fileUrl = URL.createObjectURL(blob);
+
+      // Create a link element
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = 'findy_genesis.json';
+
+      // Simulate a click on the link to trigger the file download
+      link.click();
+
+      // Clean up the temporary URL
+      URL.revokeObjectURL(fileUrl);
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error(error);
+    });
+
+}
 
 var app = new Vue({
   el: '#vue-outer',
@@ -20,13 +57,56 @@ var app = new Vue({
       ];
     }
   },
+  beforeCreate: function () {
+    let token = localStorage.getItem('token');
+    if (token) {
+      fetch('/validate', {
+        method: 'POST',
+        body: JSON.stringify({ token: token }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(
+        function (res) {
+          if (res.status == 200) {
+            //token found and validated
+            document.querySelector('[v-cloak]').removeAttribute('v-cloak')
+            window.dispatchEvent(new Event('resize'));
+          } else {
+            //redirect to login
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+          }
+        }
+      ).catch(
+        function (err) {
+          //redirect to login    
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }
+      );
+
+    } else {
+      //redirect to login      
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+  },
+
   mounted: function () {
     this.fetchStatus();
   },
+
   methods: {
     fetchStatus: function () {
       var self = this;
-      fetch('/status?validators=' + (this.ready ? '1' : '')).then(function (response) {
+      fetch('/status?validators=' + (this.ready ? '1' : ''), {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then(function (response) {
         if (response.ok) {
           response.json().then(function (result) {
             var prev_ready = self.ready;
@@ -145,11 +225,12 @@ var app = new Vue({
         info.did = this.reg_info.did;
         info.verkey = this.reg_info.verkey;
       }
-      fetch('/register', {
+      fetch('/did_register', {
         method: 'POST',
         body: JSON.stringify(info),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       }).then(
         function (res) {

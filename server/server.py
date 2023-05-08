@@ -8,6 +8,7 @@ import shutil
 import yaml
 import aiohttp_jinja2
 import jinja2
+from .auth import (authenticate, validate_token, validate_request)
 from .middleware import (
     jwt_middleware
 )
@@ -51,9 +52,41 @@ ROUTES = web.RouteTableDef()
 TRUST_ANCHOR = AnchorHandle()
 
 
+@ROUTES.post("/validate")
+async def validate(request):
+    data = await request.json()
+    token = data.get("token")
+    if not token:
+        return json_response({"error": "Missing token"}, status=400)
+    else:
+        try:
+            is_token_valid = validate_token(token)            
+            if is_token_valid == True:
+                return json_response({"valid": True}, status=200)
+            else:
+                return json_response({"valid": False}, status=401)
+        except Exception as e:
+            return json_response({"error": str(e)}, status=400)
+        
+
+@ROUTES.post("/login")
+async def login(request):
+        #Validate email and password and return JWT token
+        data = await request.json()        
+        email = data.get('email')
+        password = data.get('password')
+        # Check if the user is valid                 
+        response = await authenticate(email, password)        
+        if response['status'] == True:
+            return web.json_response({'token': response['token']}, status=200)
+        else:            
+            return web.json_response({'error': response['error'], 'status': 400}, status=400)        
+
+
 @ROUTES.get("/")
 @aiohttp_jinja2.template("index.html")
-async def index(request):
+async def index(request):    
+        
       return {
         "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
         "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
@@ -80,17 +113,6 @@ async def index(request):
 async def index(request):
     return {}
 
-
-@ROUTES.get("/main")
-@aiohttp_jinja2.template("main.html")
-async def index(request):
-    return {
-        "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
-        "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
-        "WEB_ANALYTICS_SCRIPT": WEB_ANALYTICS_SCRIPT,
-        "INFO_SITE_TEXT": INFO_SITE_TEXT,
-        "INFO_SITE_URL": INFO_SITE_URL,
-    }
 
 
 @ROUTES.get("/browse/{ledger_ident:.*}")
@@ -213,6 +235,8 @@ async def ledger_json(request):
 
 @ROUTES.get("/ledger/{ledger_name}/text")
 async def ledger_text(request):
+    # if validate_request(request) is False:
+    #     return web.Response(text="Unauthorized", status=401)
     if not TRUST_ANCHOR.ready:
         return not_ready_json()
 
@@ -314,7 +338,7 @@ async def genesis(request):
 
 
 # Easily write dids for new identity owners
-@ROUTES.post("/register")
+@ROUTES.post("/did_register")
 async def register(request):
     if not TRUST_ANCHOR.ready:
         return not_ready_json()

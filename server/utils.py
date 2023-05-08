@@ -20,7 +20,7 @@ def is_int(val):
     return isinstance(val, int) or (isinstance(val, str) and val.isdigit())
 
 def get_jwt_secret():
-    return "test"
+    return os.getenv('JWT_SECRET')
 
 async def run_thread(fn, *args):
     return await asyncio.get_event_loop().run_in_executor(None, fn, *args)

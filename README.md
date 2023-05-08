@@ -19,9 +19,9 @@ cd findy-front
 
 Update `pool_transactions_genesis` based on which ledger you want to connect
 
-Create `.env` file at the root of project and add `TRUSTEE_SEED` value
+Create `.env` file at the root of project and add `TRUSTEE_SEED` value and `JWT_SECRET` value
 ```sh
-echo TRUSTEE_SEED=000000000000000000000000Trustee1 > .env
+echo "TRUSTEE_SEED=000000000000000000000000Trustee1\nJWT_SECRET=secret" > .env
 ```
 
 Create and activate python virtual enviornment 
@@ -34,7 +34,7 @@ Install dependencies and run the front end
 ```sh
 pip install -r server/requirements.txt
 source .env 
-./start.sh $TRUSTEE_SEED
+./start.sh $TRUSTEE_SEED $JWT_SECRET
 ```
 
 ## How to run in a docker
@@ -47,10 +47,10 @@ cd findy-front
 
 Update `pool_transactions_genesis` based on which ledger you want to connect
 
-Create `.env` file at the root of project and add `TRUSTEE_SEED` value
+Create `.env` file at the root of project and add `TRUSTEE_SEED` value and `JWT_SECRET` value
 
 ```sh
-echo TRUSTEE_SEED=000000000000000000000000Trustee1 > .env
+echo "TRUSTEE_SEED=000000000000000000000000Trustee1\nJWT_SECRET=secret" > .env
 ```
 
 Build and run docker container

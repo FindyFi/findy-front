@@ -18,8 +18,12 @@ RUN pip3 install -U pip && \
 
 ADD --chown=indy:indy . $HOME
 
-ENTRYPOINT ["/bin/bash", "-c", "GENESIS_FILE=$PWD/pool_transactions_genesis \
+# Create empty .env file if it doesn't exist to avoid deployment issues
+RUN [ -f $HOME/.env ] || touch $HOME/.env
+
+ENTRYPOINT ["/bin/bash", "-c", "source $HOME/.env && GENESIS_FILE=$PWD/pool_transactions_genesis \
     LEDGER_SEED=$TRUSTEE_SEED \
+    JWT_SECRET=$JWT_SECRET \
     PORT=80 \
     LOG_LEVEL=info \
     RUST_LOG=warning \

@@ -20,6 +20,8 @@
     <!-- responsive style sheet -->
     <link rel="stylesheet" type="text/css" href="include/css/responsive.css" media="all">
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
     <!-- Fix Internet Explorer ______________________________________-->
     <!--[if lt IE 9]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,6 +31,7 @@
 </head>
 
 <body>
+
     <div class="main-page-wrapper">
         <!-- ===================================================
 				Loading Transition
@@ -75,46 +78,45 @@
                     </div>
                     <!-- <a href="index.html" class="go-back-button">Go to home</a> -->
                 </div>
-                <form action="#" class="user-data-form mt-80 lg-mt-50">
-                    <h2 class="font-recoleta">Hi welcome <br> to <span>Findy Network</span></h2>
-                    <p class="header-info pt-20 pb-50 lg-pb-30">Still don't have an account? <a
-                            href="sign-up.html">Request sign
-                            up</a></p>
+                <main id="vue-outer">
+                    <form action="/login" method="post" accept-charset="utf-8" @submit.prevent="login"
+                        class="user-data-form mt-80 lg-mt-50">
+                        <h2 class="font-recoleta">Hi welcome <br> to <span>Findy Network</span></h2>
+                        <p class="header-info pt-20 pb-50 lg-pb-30">Still don't have an account? <a target="_blank"
+                                href="mailto:info@findy.network?subject=Join%20Findy%20Network&body=Dear%20Team%20Findy,%0D%0A%0D%0AI%20am%20writing%20to%20express%20my%20interest%20in%20joining%20the%20Findy%20SSI%20network%20as%20a%20member.%0D%0AThank%20you%20for%20your%20time%20and%20consideration.%20I%20look%20forward%20to%20hearing%20back%20from%20you%20soon.%0D%0A%0D%0ABest%20regards">Request
+                                sign
+                                up</a></p>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="input-group-meta mb-30">
-                                <label>Email</label>
-                                <input type="email" placeholder="email@organization.fi">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group-meta mb-25">
-                                <label>Password</label>
-                                <input type="password" placeholder="Enter Password" class="pass_log_id">
-                                <span class="placeholder_icon"><span class="passVicon"><img
-                                            src="include/images/icon/icon_67.svg" alt=""></span></span>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="agreement-checkbox d-flex justify-content-between align-items-center">
-                                <div>
-                                    <input type="checkbox" id="remember">
-                                    <label for="remember">Keep me logged in</label>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group-meta mb-30">
+                                    <label>Email</label>
+                                    <input name="email" v-model="login_info.email" type="email"
+                                        placeholder="email@organization.fi" required>
                                 </div>
-                                <a href="#">Forget Password?</a>
-                            </div> <!-- /.agreement-checkbox -->
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group-meta mb-25">
+                                    <label>Password</label>
+                                    <input name="password" v-model="login_info.password" type="password"
+                                        placeholder="Enter Password" class="pass_log_id" required>
+                                    <span class="placeholder_icon"><span class="passVicon"><img
+                                                src="include/images/icon/icon_67.svg" alt=""></span></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" name="login"
+                                    class="theme-btn-one w-100 mt-30 mb-50">Login</button>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <button class="theme-btn-one w-100 mt-50 mb-50">Login</button>
-                        </div>
-                        <div class="col-12">
-                            <p class="text-center copyright-text">Copyright @<span id="copyright">
-                                    <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
-                                </span> Findynet Cooperative.</p>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </main>
+
+                <div class="col-12">
+                    <p class="text-center copyright-text">Copyright @<span id="copyright">
+                            <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+                        </span> Findynet Cooperative.</p>
+                </div>
             </div> <!-- /.form-wrapper -->
         </div> <!-- /.user-data-page -->
 
@@ -144,7 +146,11 @@
 
         <!-- Theme js -->
         <script src="include/js/theme.js"></script>
+
+        <script src="include/js/auth.js" type="text/javascript"></script>
     </div> <!-- /.main-page-wrapper -->
+
+
 </body>
 
 </html>

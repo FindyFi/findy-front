@@ -5,12 +5,7 @@ WHITELIST = [
     '^/favicon.ico$',
     '^/$',
     '^/login$',
-    '^/status$',  
-    '^/main$',
-    '^/genesis$', 
-    '^/status/.*$', 
     '^/browse/.*$', 
-    '^/ledger/.*$',
-    '^/register$',
-    '^/chain/.*$',     
+    '^/register$',    
+    '^/validate$'
 ]
