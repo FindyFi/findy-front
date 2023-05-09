@@ -6,8 +6,7 @@ ENV RUST_LOG ${RUST_LOG:-warning}
 
 EXPOSE 80
 
-ADD config ./config
-ADD server ./server
+COPY . .
 
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
