@@ -6,5 +6,6 @@ README.md
 COMPLIANCE.yaml
 .git*
 tmp/
+init.sql
 .history
 .vscode
