@@ -8,6 +8,11 @@ import shutil
 import yaml
 import aiohttp_jinja2
 import jinja2
+from .auth import (authenticate, validate_token)
+from .db import (get_db_manager)
+from .middleware import (
+    jwt_middleware
+)
 
 from aiohttp import web
 
@@ -28,7 +33,7 @@ os.chdir(os.path.dirname(__file__))
 
 LOGGER.info("REGISTER_NEW_DIDS is set to %s", REGISTER_NEW_DIDS)
 
-LEDGER_INSTANCE_NAME = os.getenv("LEDGER_INSTANCE_NAME", "Findy Ledger Browser")
+LEDGER_INSTANCE_NAME = os.getenv("LEDGER_INSTANCE_NAME", "Findy")
 LOGGER.info('LEDGER_INSTANCE_NAME is set to "%s"', LEDGER_INSTANCE_NAME)
 
 WEB_ANALYTICS_SCRIPT = os.getenv("WEB_ANALYTICS_SCRIPT", "")
@@ -41,22 +46,74 @@ INFO_SITE_URL = os.getenv("INFO_SITE_URL")
 INFO_SITE_TEXT = os.getenv("INFO_SITE_TEXT") or os.getenv("INFO_SITE_URL")
 
 APP = web.Application()
+APP.middlewares.append(jwt_middleware)
 aiohttp_jinja2.setup(APP, loader=jinja2.FileSystemLoader("./static"))
 
 ROUTES = web.RouteTableDef()
 TRUST_ANCHOR = AnchorHandle()
 
 
+@ROUTES.post("/validate")
+async def validate(request):
+    data = await request.json()
+    token = data.get("token")
+    if not token:
+        return json_response({"error": "Missing token"}, status=400)
+    else:
+        try:
+            is_token_valid = validate_token(token)            
+            if is_token_valid == True:
+                return json_response({"valid": True}, status=200)
+            else:
+                return json_response({"valid": False}, status=401)
+        except Exception as e:
+            return json_response({"error": str(e)}, status=400)
+        
+
+@ROUTES.post("/login")
+async def login(request):
+        #Validate email and password and return JWT token
+        data = await request.json()        
+        email = data.get('email')
+        password = data.get('password')
+        # Check if the user is valid                 
+        response = await authenticate(email, password)        
+        if response['status'] == True:
+            return web.json_response({'token': response['token']}, status=200)
+        else:            
+            return web.json_response({'error': response['error'], 'status': 400}, status=400)        
+
+
 @ROUTES.get("/")
 @aiohttp_jinja2.template("index.html")
-async def index(request):
-    return {
+async def index(request):    
+        
+      return {
         "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
         "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
         "WEB_ANALYTICS_SCRIPT": WEB_ANALYTICS_SCRIPT,
         "INFO_SITE_TEXT": INFO_SITE_TEXT,
         "INFO_SITE_URL": INFO_SITE_URL,
     }
+
+
+@ROUTES.get("/register")
+@aiohttp_jinja2.template("register.html")
+async def index(request):
+      return {
+        "REGISTER_NEW_DIDS": TRUST_ANCHOR._register_dids,
+        "LEDGER_INSTANCE_NAME": LEDGER_INSTANCE_NAME,
+        "WEB_ANALYTICS_SCRIPT": WEB_ANALYTICS_SCRIPT,
+        "INFO_SITE_TEXT": INFO_SITE_TEXT,
+        "INFO_SITE_URL": INFO_SITE_URL,
+    }
+
+
+@ROUTES.get("/login")
+@aiohttp_jinja2.template("login.html")
+async def index(request):
+    return {}
+
 
 
 @ROUTES.get("/browse/{ledger_ident:.*}")
@@ -154,7 +211,8 @@ async def ledger_json(request):
     results = []
     for row in rows:
         try:
-            last_modified = max(last_modified, row[1]) if last_modified else row[1]
+            last_modified = max(
+                last_modified, row[1]) if last_modified else row[1]
         except TypeError:
             last_modified = row[1]
         results.append(json.loads(row[3]))
@@ -220,7 +278,8 @@ async def ledger_text(request):
 
         txnTime = txn.get("txnTime")
         if txnTime is not None:
-            ftime = datetime.fromtimestamp(txnTime).strftime("%Y-%m-%d %H:%M:%S")
+            ftime = datetime.fromtimestamp(
+                txnTime).strftime("%Y-%m-%d %H:%M:%S")
             text.append("TIME: " + ftime)
 
         reqId = metadata.get("reqId")
@@ -278,7 +337,7 @@ async def genesis(request):
 
 
 # Easily write dids for new identity owners
-@ROUTES.post("/register")
+@ROUTES.post("/did_register")
 async def register(request):
     if not TRUST_ANCHOR.ready:
         return not_ready_json()
@@ -310,8 +369,8 @@ async def register(request):
         if not did or not verkey:
             return web.Response(
                 text=(
-                  "Either seed the seed parameter or the did and "
-                  "verkey parameters must be provided."),
+                    "Either seed the seed parameter or the did and "
+                    "verkey parameters must be provided."),
                 status=400,
             )
 
@@ -328,7 +387,9 @@ async def register(request):
     return json_response({"seed": seed, "did": did, "verkey": verkey})
 
 
-async def boot(app):
+async def boot(app):    
+    LOGGER.info("Connecting to DB...")
+    get_db_manager()        
     LOGGER.info("Creating trust anchor...")
     init = app["anchor_init"] = app.loop.create_task(TRUST_ANCHOR.open())
     init.add_done_callback(
@@ -342,4 +403,3 @@ if __name__ == "__main__":
     LOGGER.info("Running webserver...")
     PORT = int(os.getenv("PORT", "8000"))
     web.run_app(APP, host="0.0.0.0", port=PORT)
-

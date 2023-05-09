@@ -1,3 +1,41 @@
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = '/login';
+}
+
+async function genesis() {
+  fetch('/genesis', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  }).then(response => response.text())
+    .then(text => {
+      // Create a Blob with the JSON text
+      const blob = new Blob([text], { type: 'text/plain' });
+
+      // Create a temporary URL for the file
+      const fileUrl = URL.createObjectURL(blob);
+
+      // Create a link element
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = 'findy_genesis.json';
+
+      // Simulate a click on the link to trigger the file download
+      link.click();
+
+      // Clean up the temporary URL
+      URL.revokeObjectURL(fileUrl);
+    })
+    .catch(error => {
+      // Handle any errors
+      console.error(error);
+    });
+
+}
+
 Vue.filter(
   'concat',
   function (values) {
@@ -102,6 +140,41 @@ var app = new Vue({
       return opts;
     }
   },
+  beforeCreate: function () {
+    let token = localStorage.getItem('token');
+    if (token) {
+      fetch('/validate', {
+        method: 'POST',
+        body: JSON.stringify({ token: token }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(
+        function (res) {
+          if (res.status == 200) {
+            //token found and validated
+            document.querySelector('[v-cloak]').removeAttribute('v-cloak')
+            window.dispatchEvent(new Event('resize'));
+          } else {
+            //redirect to login
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+          }
+        }
+      ).catch(
+        function (err) {
+          //redirect to login    
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }
+      );
+
+    } else {
+      //redirect to login      
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+  },
   methods: {
     load: function () {
       this.loadPageParams();
@@ -189,7 +262,13 @@ var app = new Vue({
         url += encodeQueryString({ page: this.page, page_size: this.page_size, query: this.query, type: this.txn_type });
       var self = this;
       var reqno = ++this.reqno;
-      fetch(url).then(
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then(
         function (res) {
           if (self.reqno == reqno && res.status) {
             if (res.status == 200) {
