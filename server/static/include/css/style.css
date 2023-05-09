@@ -7981,6 +7981,10 @@ body .theme-btn-eighteen:hover:before {
   padding-bottom: 15px;
 }
 
+.illustration {
+  margin: 0 !important;
+}
+
 .user-data-page .illustration-wrapper .illustration-holder {
   width: 100%;
 }

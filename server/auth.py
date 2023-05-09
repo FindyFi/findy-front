@@ -1,13 +1,13 @@
 import jwt
 import time
 import datetime
-from aiohttp import web
-from .utils import (get_jwt_secret)
+from .utils import (get_jwt_secret, hash_password)
+from .db import (get_db_manager)
 
-async def authenticate(email, password):       
-    # Check if the user is valid
-    print(email, password)
-    if email == 'admin@admin.com' and password == 'admin':
+
+async def authenticate(email, password):
+    # Check if the user is valid    
+    if read_user_credentials(email, password):
         payload = {'user': email, 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)}        
         token = jwt.encode(payload, get_jwt_secret(), algorithm='HS256')
         return{'status': True ,'token': token}
@@ -15,11 +15,9 @@ async def authenticate(email, password):
 
 
 def validate_token(token):
-    try:
-        print(token)
+    try:        
         # Decode the token using the secret key
-        decoded = jwt.decode(token, get_jwt_secret(), algorithms=['HS256'])
-        print(decoded)
+        decoded = jwt.decode(token, get_jwt_secret(), algorithms=['HS256'])        
         # Check if the token has expired
         if 'exp' in decoded and decoded['exp'] < time.time():
             return False
@@ -48,3 +46,17 @@ def validate_request(request):
             
     # No JWT token found in the header
     return False
+
+
+def read_user_credentials(email, password):
+    try:
+        db_manager = get_db_manager()
+        # Execute a SELECT query to check if the username and password match
+        query = "SELECT COUNT(*) FROM users WHERE email = %s AND password = %s"
+
+        db_manager.execute(query, (email, hash_password(password)))
+        result = db_manager.fetchone()        
+        # If a row with matching username and password exists, authentication is successful        
+        return result[0] > 0
+    except (Exception) as error:
+        print("Error while reading from the database:", error)

@@ -6,7 +6,34 @@ var app = new Vue({
         error: ''
     },
     computed: {},
+    beforeCreate: function () {
+        let token = localStorage.getItem('token');
+        if (token) {
+            fetch('/validate', {
+                method: 'POST',
+                body: JSON.stringify({ token: token }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(
+                function (res) {
+                    if (res.status == 200) {
+                        //token found and validated
+                        window.location.href = '/';
+                    } else {
+                        localStorage.removeItem('token');
+                    }
+                }
+            ).catch(
+                function (err) {
+                    localStorage.removeItem('token');
+                }
+            );
 
+        } else {
+            localStorage.removeItem('token');
+        }
+    },
     mounted: function () {
 
     },

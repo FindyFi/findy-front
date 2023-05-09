@@ -8,7 +8,8 @@ import shutil
 import yaml
 import aiohttp_jinja2
 import jinja2
-from .auth import (authenticate, validate_token, validate_request)
+from .auth import (authenticate, validate_token)
+from .db import (get_db_manager)
 from .middleware import (
     jwt_middleware
 )
@@ -235,8 +236,6 @@ async def ledger_json(request):
 
 @ROUTES.get("/ledger/{ledger_name}/text")
 async def ledger_text(request):
-    # if validate_request(request) is False:
-    #     return web.Response(text="Unauthorized", status=401)
     if not TRUST_ANCHOR.ready:
         return not_ready_json()
 
@@ -388,7 +387,9 @@ async def register(request):
     return json_response({"seed": seed, "did": did, "verkey": verkey})
 
 
-async def boot(app):
+async def boot(app):    
+    LOGGER.info("Connecting to DB...")
+    get_db_manager()        
     LOGGER.info("Creating trust anchor...")
     init = app["anchor_init"] = app.loop.create_task(TRUST_ANCHOR.open())
     init.add_done_callback(

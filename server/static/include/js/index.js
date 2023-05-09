@@ -240,7 +240,6 @@ var app = new Vue({
               self.loading = false;
             });
           } else {
-            console.log(res);
             self.reg_error = true;
             self.loading = false;
           }
