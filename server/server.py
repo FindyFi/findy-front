@@ -388,8 +388,11 @@ async def register(request):
 
 
 async def boot(app):    
-    LOGGER.info("Connecting to DB...")
-    get_db_manager()        
+    try:
+        LOGGER.info("Connecting to DB...")
+        get_db_manager()        
+    except Exception as e:
+        LOGGER.info("DB connection failed...")
     LOGGER.info("Creating trust anchor...")
     init = app["anchor_init"] = app.loop.create_task(TRUST_ANCHOR.open())
     init.add_done_callback(
