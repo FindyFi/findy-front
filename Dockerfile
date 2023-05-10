@@ -11,9 +11,9 @@ EXPOSE 80
 
 COPY . /home/indy
 
-# COPY server/static /app/static
+COPY server/static /app/static
 
-# VOLUME /app/static
+VOLUME /app/static
 
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
