@@ -47,7 +47,7 @@ INFO_SITE_TEXT = os.getenv("INFO_SITE_TEXT") or os.getenv("INFO_SITE_URL")
 
 APP = web.Application()
 APP.middlewares.append(jwt_middleware)
-aiohttp_jinja2.setup(APP, loader=jinja2.FileSystemLoader("./static"))
+aiohttp_jinja2.setup(APP, loader=jinja2.FileSystemLoader("../static"))
 
 ROUTES = web.RouteTableDef()
 TRUST_ANCHOR = AnchorHandle()
@@ -129,10 +129,10 @@ async def browse(request):
 
 @ROUTES.get("/favicon.ico")
 async def favicon(request):
-    return web.FileResponse("static/favicon.ico")
+    return web.FileResponse("../static/favicon.ico")
 
 
-ROUTES.static("/include", "./static/include")
+ROUTES.static("/include", "../static/include")
 
 
 def json_response(data, status=200, **kwargs):
