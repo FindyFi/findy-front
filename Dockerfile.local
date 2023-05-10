@@ -1,13 +1,15 @@
 FROM bcgovimages/von-image:node-1.12-6
 USER root
 
-ENV LOG_LEVEL ${LOG_LEVEL:-info}
+# Set the workdir to the server folder
+WORKDIR /home/indy
+
 ENV RUST_LOG ${RUST_LOG:-warning}
+ENV LOG_LEVEL ${LOG_LEVEL:-info}
 
 EXPOSE 80
 
-ADD config ./config
-ADD server ./server
+COPY . .
 
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
