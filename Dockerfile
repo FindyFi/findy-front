@@ -15,7 +15,8 @@ COPY . /app
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
 # So we need to downgrade to pip 9.0.3 after requirements install
-RUN apt-get install -y --no-install-recommends openssh-server && \
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends openssh-server && \
     pip3 install -U pip && \    
     pip install --no-cache-dir -r server/requirements.txt && \
     pip install psycopg2-binary && \
