@@ -164,6 +164,7 @@ var app = new Vue({
       ).catch(
         function (err) {
           //redirect to login    
+          console.log(err);
           localStorage.removeItem('token');
           window.location.href = '/login';
         }

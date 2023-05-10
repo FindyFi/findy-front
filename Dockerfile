@@ -10,7 +10,7 @@ ENV LOG_LEVEL ${LOG_LEVEL:-info}
 EXPOSE 80 2222
 
 COPY . .
-COPY ./server/static/include /app/static/include
+COPY . /app
 
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
