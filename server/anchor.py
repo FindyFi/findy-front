@@ -80,8 +80,8 @@ LEDGER_SEED = os.getenv("LEDGER_SEED")
 
 REGISTER_NEW_DIDS = env_bool("REGISTER_NEW_DIDS", False)
 
-AML_CONFIG = os.getenv("AML_CONFIG_FILE", "/home/indy/config/aml.json")
-TAA_CONFIG = os.getenv("TAA_CONFIG_FILE", "/home/indy/config/taa.json")
+AML_CONFIG = os.getenv("AML_CONFIG_FILE", "/home/indy/config/findy_aml.json")
+TAA_CONFIG = os.getenv("TAA_CONFIG_FILE", "/home/indy/config/findy_taa.json")
 
 
 def format_validator_info(node_data):
