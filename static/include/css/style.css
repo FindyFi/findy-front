@@ -11,37 +11,14 @@
 * Importing necessary  Styles.
 **/
 /*----- Fonts ----*/
-@import url('../fonts/recoleta/stylesheet.css');
 @import url('../fonts/gordita/stylesheet.css');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
 /*----Bootstrap css ----- */
 @import url('../vendor/bootstrap/css/bootstrap.min.css');
 /*---- Navbar Css------*/
-@import url('navbar.css');
+/* @import url('navbar.css'); */
 /*----Framework css-----*/
 @import url('framework.css');
-/*----- Bootstrap Icons ----------*/
-@import url('../fonts/bootstrap-icons/font-css.css');
-/*---- Font Awesome Icons -------*/
-@import url('../fonts/font-awesome/css/all.min.css');
-/*----------- Fancybox css -------*/
-@import url('../vendor/fancybox/dist/jquery.fancybox.min.css');
-/*----------- Slick Slider -------*/
-@import url('../vendor/slick/slick.css');
-/*----Animate css----*/
-@import url('animate.min.css');
-@import url('custom-animation.css');
-/*----- Select Css ------*/
-@import url('../vendor/selectize.js/selectize.css');
-/*----- Animated Headline ------*/
-@import url('../vendor/animated-headline-master/style.css');
-/*----- Fullpage Scroll ------*/
-@import url('../vendor/fullScroll/jquery.pagepiling.css');
-/*-------- AOS css ------*/
-@import url('../vendor/aos-next/dist/aos.css');
-/*------- Phone Number Selector -------*/
-@import url('../vendor/intl-tel/build/css/intlTelInput.css');
-
 
 /*========================================================================================
 
