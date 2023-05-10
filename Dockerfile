@@ -4,8 +4,8 @@ USER root
 # Set the working directory
 WORKDIR /app
 
-ENV LOG_LEVEL ${LOG_LEVEL:-info}
 ENV RUST_LOG ${RUST_LOG:-warning}
+ENV LOG_LEVEL ${LOG_LEVEL:-info}
 
 EXPOSE 80
 
@@ -23,4 +23,5 @@ RUN pip3 install -U pip && \
 
 ADD --chown=indy:indy . $HOME
 
+# Run the server
 ENTRYPOINT ["/bin/bash", "-c", "python -m server.server"]
