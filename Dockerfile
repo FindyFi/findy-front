@@ -1,9 +1,6 @@
 FROM bcgovimages/von-image:node-1.12-6
 USER root
 
-# Set the working directory
-WORKDIR /app
-
 ENV RUST_LOG ${RUST_LOG:-warning}
 ENV LOG_LEVEL ${LOG_LEVEL:-info}
 
@@ -22,6 +19,9 @@ RUN pip3 install -U pip && \
     python -m pip install pip==9.0.3
 
 ADD --chown=indy:indy . $HOME
+
+# Set the workdir to the server folder
+WORKDIR /app
 
 # Run the server
 ENTRYPOINT ["/bin/bash", "-c", "python -m server.server"]
