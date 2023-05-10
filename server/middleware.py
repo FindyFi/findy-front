@@ -1,5 +1,5 @@
 from aiohttp import web
-from .utils import (get_jwt_secret, match_path_regex)
+from .utils import (match_path_regex)
 from .whitelist import (WHITELIST)
 from .auth import (validate_request)
 

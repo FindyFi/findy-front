@@ -1,11 +1,3 @@
-// js Document
-
-// Created on   : 11/10/2021.
-// Theme Name   : vCamp-Creative Agency & Portfolio HTML5 Template
-// Version      : 1.0.
-// Developed by : (me@heloshape.com) / (www.me.heloshape.com)
-
-
 (function ($) {
   "use strict";
 

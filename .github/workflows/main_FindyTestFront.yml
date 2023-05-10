@@ -2,13 +2,13 @@ name: Deploy Findy-front to ACR
 
 on:
   push:
-    branches: [test]
+    branches: [main]
 
 jobs:
   docker_build_push_acr:
     name: "Docker Build and Push to ACR"
     runs-on: ubuntu-latest
-    environment: test
+    environment: production
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.ACR_REGISTRY }}/findy-front-test:${{ github.sha }}
+          tags: ${{ secrets.ACR_REGISTRY }}/findy-front-prod:${{ github.sha }}
           file: Dockerfile
 
       - name: Deploy to Azure Web App
@@ -40,4 +40,4 @@ jobs:
         with:
           app-name: "FindyTestFront"
           publish-profile: ${{ secrets.FINDYTESTFRONT_PUBLISH_PROFILE }}
-          images: "${{ secrets.ACR_REGISTRY }}/findy-front-test:${{ github.sha }}"
+          images: "${{ secrets.ACR_REGISTRY }}/findy-front-prod:${{ github.sha }}"
