@@ -9,7 +9,7 @@ services:
     environment:
       - GENESIS_FILE=/home/indy/pool_transactions_genesis
       - LEDGER_SEED=$TRUSTEE_SEED
-      - JWT_SECRET=$JWT_SECRET
+      - JWT_SECRET=secret
       - PORT=80
       - LOG_LEVEL=info
       - RUST_LOG=warning

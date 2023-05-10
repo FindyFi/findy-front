@@ -20,7 +20,7 @@ cd findy-front
 
 Update `pool_transactions_genesis` based on which ledger you want to connect
 
-Setup a standard local PostgreSQL with database `findytestfrontdb` with user `postgres` and *empty* password, in case you have different db user or password you can set DB_USER and DB_USER in .env file.
+Setup a standard local PostgreSQL with database `findytestfrontdb` with user `postgres` and no DB password, in case you want to connect to an external db you can set DB_HOST, DB_NAME, DB_USER and DB_PASSWORD in .env file.
 
 Add a table `users` with columns `email` and `password`. Also add a record in which password is hashed using SHA256. You can use the provided script below.
 
@@ -65,10 +65,10 @@ cd findy-front
 
 Update `pool_transactions_genesis` based on which ledger you want to connect
 
-Create `.env` file at the root of project and add `TRUSTEE_SEED` value and `JWT_SECRET` value
+Create `.env` file at the root of project and add `TRUSTEE_SEED` value.
 
 ```sh
-echo "TRUSTEE_SEED=000000000000000000000000Trustee1\nJWT_SECRET=secret" > .env
+echo "TRUSTEE_SEED=000000000000000000000000Trustee1" > .env
 ```
 
 Build and run docker containers

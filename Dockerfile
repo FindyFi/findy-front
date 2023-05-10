@@ -25,7 +25,7 @@ RUN apt-get update -y && \
 
 # RUN mkdir -p /run/sshd && echo "root:Docker!" | chpasswd
 
-COPY sshd_config /etc/ssh/
+# COPY sshd_config /etc/ssh/
 
 ADD --chown=indy:indy . $HOME
 
