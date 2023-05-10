@@ -1,12 +1,18 @@
 FROM bcgovimages/von-image:node-1.12-6
 USER root
 
+WORKDIR /home/indy
+
 ENV LOG_LEVEL ${LOG_LEVEL:-info}
 ENV RUST_LOG ${RUST_LOG:-warning}
 
 EXPOSE 80
 
-COPY . .
+COPY . /home/indy
+
+RUN chmod -R 755 /home/indy
+
+VOLUME /home/indy/server/static
 
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
@@ -18,9 +24,5 @@ RUN pip3 install -U pip && \
     python -m pip install pip==9.0.3
 
 ADD --chown=indy:indy . $HOME
-
-RUN chmod -R 755 /home/indy
-
-WORKDIR /home/indy
 
 ENTRYPOINT ["/bin/bash", "-c", "python -m server.server"]
