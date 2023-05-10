@@ -7,7 +7,7 @@ WORKDIR /home/indy
 ENV RUST_LOG ${RUST_LOG:-warning}
 ENV LOG_LEVEL ${LOG_LEVEL:-info}
 
-EXPOSE 80
+EXPOSE 80 2222
 
 COPY . .
 COPY ./server/static/include /app/static/include
