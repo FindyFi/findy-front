@@ -8,9 +8,11 @@ ENV RUST_LOG ${RUST_LOG:-warning}
 
 EXPOSE 80
 
-COPY . .
+COPY . /home/indy
 
-RUN chmod -R 777 /home/indy/server/static
+VOLUME /home/indy
+
+RUN chmod -R 777 /home/indy
 
 # Here we need to upgrade pip in order to intsall IndyVDR binary
 # However, this causes issue with 'plenum' package (for example: https://github.com/bcgov/von-network/issues/238)
