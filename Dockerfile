@@ -24,16 +24,16 @@ ADD --chown=indy:indy . $HOME
 # Set the working directory
 WORKDIR /home/indy
 
-RUN [ -f $HOME/.env ] || touch $HOME/.env
+# RUN [ -f $HOME/.env ] || touch $HOME/.env
 
-ENTRYPOINT ["/bin/bash", "-c", "source $HOME/.env && GENESIS_FILE=$PWD/pool_transactions_genesis \
-    LEDGER_SEED=$TRUSTEE_SEED \
-    PORT=80 \
-    LOG_LEVEL=info \
-    RUST_LOG=warning \
-    REGISTER_NEW_DIDS=True \
-    AML_CONFIG_FILE=$PWD/config/sample_aml.json \
-    TAA_CONFIG=$PWD/config/sample_taa.json \
-    python -m server.server"]
+# ENTRYPOINT ["/bin/bash", "-c", "source $HOME/.env && GENESIS_FILE=$PWD/pool_transactions_genesis \
+#     LEDGER_SEED=$TRUSTEE_SEED \
+#     PORT=80 \
+#     LOG_LEVEL=info \
+#     RUST_LOG=warning \
+#     REGISTER_NEW_DIDS=True \
+#     AML_CONFIG_FILE=$PWD/config/sample_aml.json \
+#     TAA_CONFIG=$PWD/config/sample_taa.json \
+#     python -m server.server"]
 
-# ENTRYPOINT ["/bin/bash", "-c", "python -m server.server"]
+ENTRYPOINT ["/bin/bash", "-c", "python -m server.server"]
