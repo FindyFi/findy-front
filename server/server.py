@@ -47,7 +47,7 @@ INFO_SITE_TEXT = os.getenv("INFO_SITE_TEXT") or os.getenv("INFO_SITE_URL")
 
 APP = web.Application()
 APP.middlewares.append(jwt_middleware)
-APP.router.add_static('/static/', path="./static", name='static')
+APP.router.add_static('/static/include', path="./static/include", name='static')
 aiohttp_jinja2.setup(APP, loader=jinja2.FileSystemLoader("./static"))
 
 ROUTES = web.RouteTableDef()
