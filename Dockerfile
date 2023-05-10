@@ -19,6 +19,8 @@ RUN pip3 install -U pip && \
 
 ADD --chown=indy:indy . $HOME
 
-RUN chmod -R 777 $HOME
+RUN chmod -R 755 /home/indy
+
+WORKDIR /home/indy
 
 ENTRYPOINT ["/bin/bash", "-c", "python -m server.server"]
