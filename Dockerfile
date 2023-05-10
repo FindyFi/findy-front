@@ -11,7 +11,7 @@ EXPOSE 80
 
 COPY . /home/indy
 
-COPY server/static /app/static
+COPY ./server/static /app/static
 
 VOLUME /app/static
 
