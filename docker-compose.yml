@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+  # Findy Frontend
+  findy-frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.local
+    environment:
+      - GENESIS_FILE=/home/indy/pool_transactions_genesis
+      - LEDGER_SEED=$TRUSTEE_SEED
+      - JWT_SECRET=secret
+      - PORT=80
+      - LOG_LEVEL=info
+      - RUST_LOG=warning
+      - REGISTER_NEW_DIDS=True
+      - DB_HOST=findy-db
+      - DB_NAME=findytestfrontdb
+      - DB_USER=postgres
+      - DB_PASSWORD=test
+    ports:
+      - 9000:80
+    depends_on:
+      findy-db:
+        condition: service_started
+    entrypoint: /bin/bash
+    command: [ '-c', 'source .env && python -m server.server' ]
+    volumes:
+      - ./local-storage/findy.yaml:/home/indy/findy.yaml
+    networks:
+      - findy-frontend-network
+
+  # Postgres DB
+  findy-db:
+    image: postgres:11.13
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=findytestfrontdb
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - findy-frontend-network
+
+networks:
+  findy-frontend-network:
+    name: docker_findy-server
