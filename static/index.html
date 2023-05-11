@@ -85,57 +85,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Navigation -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item  active ">
-                            <a class="nav-link  active " href="/">
-                                <i class="ni ni-world text-primary"></i> Network
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="/browse/domain">
-                                <i class="ni ni-collection text-blue"></i> Ledger
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="/register">
-                                <i class="ni ni-check-bold text-blue"></i> Register DID
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="genesis()">
-                                <i class="ni ni-app text-blue"></i> Genesis
-                            </a>
-                        </li>
-
-                    </ul>
-                    <!-- Divider -->
-                    <hr class="my-3">
-                    <!-- Heading -->
-                    <h6 class="navbar-heading text-muted">Documentation</h6>
-                    <!-- Navigation -->
-                    <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank"
-                                href="https://github.com/FindyFi/findy-front/blob/main/GETTING_STARTED.md">
-                                <i class="ni ni-spaceship"></i> Getting started
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="https://findy.fi">
-                                <i class="ni ni-active-40"></i> Visit Findy.fi
-                            </a>
-                        </li>
-
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item active active-pro">
-                            <a class="nav-link" target="_blank" href="mailto:info@findy.fi">
-                                <i class="ni ni-send text-dark"></i> Contact us
-                            </a>
-                        </li>
-                    </ul>
+    {% endraw %}
+    {% include 'navigation.j2' %}
+    {% raw %}
                 </div>
             </div>
         </nav>
