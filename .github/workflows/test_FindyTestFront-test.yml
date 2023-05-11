@@ -38,6 +38,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "FindyTestFront"
+          app-name: "FindyTestFront-test"
           publish-profile: ${{ secrets.FINDYTESTFRONT_PUBLISH_PROFILE }}
           images: "${{ secrets.ACR_REGISTRY }}/findy-front-test:${{ github.sha }}"
