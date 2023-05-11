@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "text": "This is a Transaction Authors Agreement **(TAA)**, for the Findy test Network.\n\nOn public ledger systems this will typically contain legal constraints that must be accepted before any write operations will be permitted.",
-  "ratification_ts": 1597654073,
+  "text": "This is a Transaction Authors Agreement **(TAA)**, for the Findy test Network.\n\nAs a transaction author, I agree to adhere to the terms aof use available at https://findy.fi/wp-content/uploads/2023/05/Appendix-3-%E2%80%93-Findynet-Test-Network-%E2%80%93-Terms-of-Use.pdf.",
+  "ratification_ts": 1683288000,
   "retirement_ts": null
 }
