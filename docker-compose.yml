@@ -14,8 +14,6 @@ services:
       - LOG_LEVEL=info
       - RUST_LOG=warning
       - REGISTER_NEW_DIDS=True
-      - AML_CONFIG_FILE=/home/indy/config/findy_aml.json
-      - TAA_CONFIG=/home/indy/config/findy_taa.json
       - DB_HOST=findy-db
       - DB_NAME=findytestfrontdb
       - DB_USER=postgres
