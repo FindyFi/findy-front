@@ -42,7 +42,7 @@ Create `.env` file at the root of project and add `TRUSTEE_SEED` and `JWT_SECRET
 echo "TRUSTEE_SEED=000000000000000000000000Trustee1\nJWT_SECRET=secret" > .env
 ```
 
-Create and activate python virtual enviornment 
+Create and activate python virtual environment 
 ```sh
 virtualenv --python=python3.6 venv
 source venv/bin/activate
