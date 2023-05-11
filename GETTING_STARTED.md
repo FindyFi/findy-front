@@ -2,14 +2,10 @@
 
 There are multiple ways to get started with Findy Test Net.
 
-## Use an existing Wallets
+## Use an existing Wallet
 Findy Test Net is pre-registered at least in the following wallet implementations:
-* iGrant Data Wallet
-  * [App Store](https://apple.co/2Mz9nJp)
-  * [Google Play](https://play.google.com/store/apps/details?id=io.igrant.mobileagent)
-* Lissi Agent
-  * [App Store](https://apps.apple.com/en/app/lissi-wallet/id1529848685)
-  * [Google Play](https://play.google.com/store/apps/details?id=io.lissi.mobile.android)
+* [iGrant Data Wallet](https://igrant.io/datawallet.html) ([App Store](https://apple.co/2Mz9nJp), [Google Play](https://play.google.com/store/apps/details?id=io.igrant.mobileagent))
+* [Lissi Agent](https://www.lissi.id/) ([App Store](https://apps.apple.com/en/app/lissi-wallet/id1529848685), [Google Play](https://play.google.com/store/apps/details?id=io.lissi.mobile.android))
 
 ## Access the ledger via Indy SDK
 ### Install Indy SDK
@@ -27,7 +23,10 @@ indy-cli
 
 ```
 indy> pool create FindyTestNet gen_txn_file=findy_genesis.json
-indy> wallet create MyTestWallet key
+indy> pool connect FindyTestNet
+pool(FindyTestNet):indy> wallet create MyTestWallet key
+pool(FindyTestNet):indy> wallet open MyTestWallet key
+pool(FindyTestNet):MyTestWallet2:indy> did new
 ```
 
 ## ACA-py
@@ -53,6 +52,6 @@ Coming later...
   ],
 ```
 
-## Indy Story Walkthrough (a Developer Guide for Building Indy Clients Using Libindy)
-You should be able to execute the whole [Indy Story Walkthrough](https://hyperledger-indy.readthedocs.io/projects/sdk/en/latest/docs/getting-started/indy-walkthrough.html).
+## Indy Story Walkthrough
+You should be able to execute the whole [Indy Story Walkthrough](https://hyperledger-indy.readthedocs.io/projects/sdk/en/latest/docs/getting-started/indy-walkthrough.html) (a Developer Guide for Building Indy Clients Using Libindy).
 Use the Steward DID you received when signing up to the network to create Verinyms for Faber College, Acme Corp and Thrift bank. The step 3 in the walkthrough has already been done and you should have your `steward['did']` and `steward['key']`. You can continue from step 4 but please do read the first chapters to understand what's going on.
