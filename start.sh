@@ -7,4 +7,6 @@ PORT=9000 \
 LOG_LEVEL=info \
 RUST_LOG=warning \
 REGISTER_NEW_DIDS=True \
+TAA_CONFIG_FILE=$PWD/config/findy_taa.json \
+AML_CONFIG_FILE=$PWD/config/findy_aml.json \
 python -m server.server
