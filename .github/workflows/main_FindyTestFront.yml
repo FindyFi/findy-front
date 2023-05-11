@@ -1,4 +1,4 @@
-name: Deploy Findy-front to ACR
+name: Deploy Findy-front to Prodcution Environment
 
 on:
   push:
