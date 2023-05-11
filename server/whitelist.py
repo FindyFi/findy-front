@@ -7,5 +7,5 @@ WHITELIST = [
     '^/login$',
     '^/browse/.*$', 
     '^/register$',    
-    '^/validate$'
+    '^/validate$'    
 ]

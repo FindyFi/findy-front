@@ -18,6 +18,8 @@ services:
       - DB_NAME=findytestfrontdb
       - DB_USER=postgres
       - DB_PASSWORD=test
+      - AML_CONFIG_FILE=/home/indy/config/findy_aml.json
+      - TAA_CONFIG_FILE=/home/indy/config/findy_taa.json
     ports:
       - 9000:80
     depends_on:
