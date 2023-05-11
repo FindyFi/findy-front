@@ -89,6 +89,13 @@
     {% include 'navigation.j2' %}
     {% raw %}
                 </div>
+                <script>
+                    const myNavLink = document.querySelector('#sidenav-collapse-main .navbar-nav a[href="/"]')
+                    if (myNavLink) {
+                        myNavLink.classList.add('active')
+                        myNavLink.classList.parentNode.add('active')
+                    }
+                </script>
             </div>
         </nav>
         <div class="main-content">
